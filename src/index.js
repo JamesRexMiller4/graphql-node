@@ -13,6 +13,7 @@ const resolvers = {
   Query: {
     info: () => 'This is the API of a Hackernews Clone',
     feed: () => links,
+    link: (id) => Link,
   },
   Mutation: {
     post: (parent, args) => {
@@ -23,17 +24,24 @@ const resolvers = {
       };
       links.push(link);
       return link;
+    },
+    updateLink: (parent, args) => {
+      let linkToUpdate = links.find(link => link.id === args.id);
+      linkToUpdate.id = args.id;
+      linkToUpdate.description = args.description;
+      linkToUpdate.url = args.url;
+      return linkToUpdate;
+    },
+    deleteLink: (parent, args) => {
+      let removeLink = links.find(link => link.id === args.id);
+      links = links.filter(link => link !== removeLink);
+      return removeLink;
     }
   },
-  Link: {
-    id: (parent) => parent.id,
-    description: (parent) => parent.description,
-    url: (parent) => parent.url,
-  }
 };
 
 const server = new GraphQLServer({
-  typeDefs: './schema.graphql',
+  typeDefs: './src/schema.graphql',
   resolvers,
 });
 server.start(() => console.log('Server is running on http://localhost:4000'));
