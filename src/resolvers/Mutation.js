@@ -4,7 +4,7 @@ const { APP_SECRET, getUserId } = require('../utils');
 
 
 async function signup(parent, args, context, info) {
-  const hashedPassword = await bcrypt.has(args.password, 10);
+  const hashedPassword = await bcrypt.hash(args.password, 10);
   const {password, ...user} = await context.prisma.createUser({
     ...args,
     password: hashedPassword
