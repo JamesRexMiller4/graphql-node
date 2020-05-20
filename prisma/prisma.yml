@@ -1,7 +1,6 @@
-endpoint: ''
-
-datamodel: datamodel:prisma
+endpoint: https://us1.prisma.sh/james-miller-dce515/graphql-node-prisma-db/dev
+datamodel: datamodel.prisma
 
 generate:
   - generator: javascript-client
-    output: ../src/generated/prisma-client
+    output: ./generated/prisma-client/
